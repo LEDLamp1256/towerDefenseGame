@@ -12,9 +12,15 @@ class Path:
         for i in range(len(self.pathSegmentList)):
             PathSegment.render(self.pathSegmentList[i], screen)
 
-    def getStart(self):
+    def getStartIndex(self):
         return 0
 
+    def getStartCoordinate(self):
+        return self.pathSegmentList[0].getCenter()
+
     def getSegmentCoordinates(self, pathIndex):
-        return
+        return self.pathSegmentList[pathIndex + 1].getCenter()
+
+    def updateIndex(self, pathIndex):
+        return pathIndex + 1
 

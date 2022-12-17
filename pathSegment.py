@@ -12,3 +12,6 @@ class PathSegment:
 
     def render(self, screen):
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.width), width=0)
+
+    def getCenter(self):
+        return self.center
