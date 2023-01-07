@@ -1,13 +1,15 @@
 from path import Path
-
+import pygame
 class Slime:
-    def __init__(self, speed, health, followedpath: Path):
+    def __init__(self, speed, health, followedpath: Path, color, radius):
         self.health = health
         self.speed = speed
         self.followedpath = followedpath
         self.pathIndex = followedpath.getStartIndex()
         self.x = self.followedpath.getStartCoordinate()[0]
         self.y = self.followedpath.getStartCoordinate()[1]
+        self.color = color
+        self.radius = radius
 
     # 1 is left, 2 is right, 3 is up, 4 is down
     def direction(self, targetxy):
@@ -23,33 +25,44 @@ class Slime:
             return 2
 
     def update(self):
-        target = self.followedpath.getSegmentCoordinates(self.pathIndex)
-        dir = self.direction(target)
-        if abs((self.x - target[0]) + (self.y - target[1])) >= self.speed:
-            if dir == 1:
-                self.x -= self.speed
-            elif dir == 2:
-                self.x += self.speed
-            elif dir == 3:
-                self.y -= self.speed
+        if self.followedpath.reachedEnd(self.pathIndex):
+            return True
+        remainingSpeed = self.speed
+        while remainingSpeed > 0:
+            target = self.followedpath.getSegmentCoordinates(self.pathIndex)
+            dir = self.direction(target)
+            if abs((self.x - target[0]) + (self.y - target[1])) >= remainingSpeed:
+                if dir == 1:
+                    self.x -= remainingSpeed
+                elif dir == 2:
+                    self.x += remainingSpeed
+                elif dir == 3:
+                    self.y -= remainingSpeed
+                else:
+                    self.y += remainingSpeed
+                remainingSpeed = 0
             else:
-                self.y += self.speed
+                overshoot =  remainingSpeed - abs((self.x - target[0]) + (self.y - target[1]))
+                if dir == 1:
+                    self.x -= remainingSpeed - overshoot
+                elif dir == 2:
+                    self.x += remainingSpeed - overshoot
+                elif dir == 3:
+                    self.y -= remainingSpeed - overshoot
+                else:
+                    self.y += remainingSpeed - overshoot
+                remainingSpeed = overshoot
 
-        else:
-            overshoot =  self.speed - abs((self.x - target[0]) + (self.y - target[1]))
-            if dir == 1:
-                self.x -= self.speed - overshoot
-            elif dir == 2:
-                self.x += self.speed - overshoot
-            elif dir == 3:
-                self.y -= self.speed - overshoot
-            else:
-                self.y += self.speed - overshoot
+            if abs((self.x - target[0]) + (self.y - target[1])) == 0:
+                self.pathIndex = self.followedpath.updateIndex(self.pathIndex)
+                if self.followedpath.reachedEnd(self.pathIndex):
+                    return True
+        return False
 
-        if abs((self.x - target[0]) + (self.y - target[1])) == 0:
-            self.pathIndex = self.followedpath.updateIndex(self.pathIndex)
+                #go back to start until no speed left
 
-            #go back to start until no speed left
+    def render(self, screen):
+        pygame.draw.circle(screen, self.color, (self.x, self.y), self.radius)
 
 
 

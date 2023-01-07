@@ -1,14 +1,15 @@
 import time
-from colors import WHITE, BLACK
+from colors import WHITE, BLACK,  GREEN
 import pygame
 from path import Path
-
+from enemy import Slime
 pygame.init()
 
 SCREENX = 400
 SCREENY = 400
 screen = pygame.display.set_mode((SCREENX, SCREENY))
-gamePath = Path([(0,0),(50, 0),(100,0)], 40, BLACK)
+gamePath = Path([(0,0),(50, 0), (50, 50), (100, 50), (100,0)], 40, BLACK)
+testSlime = Slime(0.1, 10, gamePath, GREEN, 5)
 
 test = 0
 clock = pygame.time.Clock()
@@ -23,6 +24,10 @@ while not done:
 
 
     gamePath.render(screen)
+
+    testSlime.update()
+    testSlime.render(screen)
+
     pygame.display.update()
     clock.tick(60)
 pygame.quit()

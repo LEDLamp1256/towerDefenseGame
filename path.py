@@ -24,3 +24,8 @@ class Path:
     def updateIndex(self, pathIndex):
         return pathIndex + 1
 
+    def reachedEnd(self, pathIndex):
+        if pathIndex == len(self.pathSegmentList) - 1:
+            return True
+        return False
+
