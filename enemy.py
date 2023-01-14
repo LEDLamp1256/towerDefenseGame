@@ -1,7 +1,7 @@
 from path import Path
 import pygame
 class Slime:
-    def __init__(self, speed, health, followedpath: Path, color, radius):
+    def __init__(self, speed, health, followedpath: Path, color, radius, damage):
         self.health = health
         self.speed = speed
         self.followedpath = followedpath
@@ -10,6 +10,7 @@ class Slime:
         self.y = self.followedpath.getStartCoordinate()[1]
         self.color = color
         self.radius = radius
+        self.damage = damage
 
     # 1 is left, 2 is right, 3 is up, 4 is down
     def direction(self, targetxy):
