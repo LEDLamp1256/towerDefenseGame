@@ -29,3 +29,8 @@ class Path:
             return True
         return False
 
+    def getRectangles(self):
+        pathRectangles = []
+        for i in self.pathSegmentList:
+            pathRectangles.append(i.rectangle)
+        return pathRectangles
