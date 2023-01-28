@@ -4,6 +4,8 @@ import pygame
 from path import Path
 from enemy import Slime
 from player import Player
+from button import TowerButton
+from tower import ArrowTower
 pygame.init()
 
 SCREENX = 400
@@ -17,6 +19,8 @@ test = 0
 clock = pygame.time.Clock()
 frameRateTest = time.time()
 
+testButton = TowerButton("ArrowTower", ArrowTower, 200, 200, 20, 10, BLACK)
+
 enemyList = [testSlime]
 
 done = False
@@ -27,7 +31,7 @@ while not done:
 
     screen.fill(WHITE)
 
-
+    testButton.render(screen)
 
     gamePath.render(screen)
 
