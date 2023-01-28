@@ -8,6 +8,8 @@ from button import TowerButton
 from tower import ArrowTower
 pygame.init()
 
+#
+
 SCREENX = 400
 SCREENY = 400
 screen = pygame.display.set_mode((SCREENX, SCREENY))
