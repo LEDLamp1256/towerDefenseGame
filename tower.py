@@ -19,10 +19,13 @@ class ArrowTower:
     def render(self, screen, path, towers):
         if self.placing and not self.buildingCollisionCheck(path, towers):
             pygame.draw.rect(screen, GREEN, (self.x - (1/2 * self.width), self.y - (1/2 * self.width), self.width, self.width))
+            pygame.draw.circle(screen, RED, (self.x, self.y), self.range, 3)
         elif self.placing and self.buildingCollisionCheck(path, towers):
             pygame.draw.rect(screen, RED, (self.x - (1/2 * self.width), self.y - (1/2 * self.width), self.width, self.width))
+            pygame.draw.circle(screen, RED, (self.x, self.y), self.range, 3)
         elif not self.placing:
             pygame.draw.rect(screen, SILVER, (self.x - (1/2 * self.width), self.y - (1/2 * self.width), self.width, self.width))
+
 
     def attack(self, path):
         if not self.neutral:
